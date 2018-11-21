@@ -1,7 +1,7 @@
 const crypto = require('crypto')
 const jwt = require('jsonwebtoken')
 
-const config = require('./../config')
+const { auth } = require('./../config')
 
 // const { getChapter } = require('./mangapark/chapter')
 const { searchByTitle } = require('./mangapark/search')
@@ -19,7 +19,7 @@ async function init () {
   // create a token
   const token = jwt.sign(
     { id: 'user._id' },
-    config.secret,
+    auth.secret,
     { expiresIn: 3600 * 24 } // expires in 24 hours
   )
 

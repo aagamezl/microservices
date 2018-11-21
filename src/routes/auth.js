@@ -2,6 +2,9 @@ const crypto = require('crypto')
 
 const jwt = require('jsonwebtoken')
 
+const { uuid } = require('./../utils')
+const mongodb = require('./../database/mongodb')
+
 const hashPassword = (password) => {
   return crypto.createHash('sha256').update(password).digest('hex')
 }
@@ -15,7 +18,8 @@ const generateToken = (payload, password, expireIn = '15m') => {
 }
 
 const getCredential = (data) => {
-  const credential = Buffer.from(data, 'base64').toString('ascii').split(':')
+  const credential = Buffer.from(data.slice(6), 'base64')
+    .toString('ascii').split(':')
 
   return {
     username: credential[0],
@@ -27,7 +31,7 @@ const setup = (server) => {
   server.post('/login', async (request, response) => {
     console.log(`executing: /login`)
 
-    const credential = getCredential(request.headers.authorization.slice(6))
+    const credential = getCredential(request.headers.authorization)
     const hashedPassword = hashPassword(credential.password)
 
     // const data = {
@@ -41,24 +45,49 @@ const setup = (server) => {
 
     // retrieve issue and expiration times
     const { iat, exp } = jwt.decode(token)
-    
+
     response.send({ iat, exp, token })
   })
 
-  server.post('/register', async (request, reply) => {
+  server.post('/register', async (request, response) => {
     console.log(`executing: /register`)
 
-    const hashedPassword = hashPassword(request.body.password)
+    const credential = getCredential(request.headers.authorization)
+    const hashedPassword = hashPassword(credential.password)
 
-    console.log({
-      name : request.body.name,
-      email : request.body.email,
-      password : hashedPassword
-    })
+    const user = {
+      name: request.body.name,
+      username: credential.username,
+      password: hashedPassword
+    }
 
-    const response = {}
+    try {
+      const { db, client } = await mongodb.connect()
 
-    reply.send({ response })
+      // TODO: Check if the user exists
+      const result = await mongodb.insertDocuments(db, 'users', [user])
+
+      mongodb.close(client)
+
+      console.log(result)
+
+      const token = generateToken({
+        id: result.insertedIds[0].toString()
+      }, credential.password)
+
+      // retrieve issue and expiration times
+      const { iat, exp } = jwt.decode(token)
+
+      response.send({ iat, exp, token })
+    } catch (error) {
+      // const id = crypto.randomBytes(16).toString('hex')
+      const id = uuid()
+      const message = `An unexpected error has occurred. Check the serer log for more information. Error ID: ${id}`
+
+      response.code(500).send({ message })
+      
+      console.log(`Error ID: ${id} - ${error.message}`)
+    }
   })
 }
 
