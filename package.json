@@ -1,0 +1,31 @@
+{
+  "name": "microservices",
+  "version": "1.0.0",
+  "description": "This service is a normal webservice to make web scrapping of several Manga source and make the result available through a REST API.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aagamezl/microservices.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aagamezl/microservices/issues"
+  },
+  "homepage": "https://github.com/aagamezl/microservices#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "fastify": "^1.13.0",
+    "jquery": "^3.3.1",
+    "jsdom": "^13.0.0",
+    "jsonwebtoken": "^8.4.0",
+    "mongodb": "^3.1.10",
+    "node-etcd": "^7.0.0",
+    "request": "^2.88.0"
+  }
+}

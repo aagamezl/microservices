@@ -11,6 +11,9 @@ pids
 *.seed
 *.pid.lock
 
+# Coverage directory used by tools like istanbul
+coverage
+
 # Dependency directories
 node_modules/
 jspm_packages/
@@ -38,3 +41,12 @@ typings/
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
+
+# VS Code
+.vscode
+
+# cache for the API
+cache
+
+# etcd
+default.etcd
