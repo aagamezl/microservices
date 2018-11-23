@@ -29,6 +29,14 @@ const getCredential = (data) => {
   }
 }
 
+const isValidUser = ({ username, password, name } = {}) => {
+  if (!name) return { ok: false, message: 'Name must be supplied'}
+  if (!username) return { ok: false, message: 'Username must be supplied'}
+  if (!password) return { ok: false, message: 'Password must be supplied'}
+
+  return { ok: true };
+}
+
 const setup = (server) => {
   server.post('/login', async (request, response) => {
     console.log(`executing: POST /login`)
@@ -74,6 +82,18 @@ const setup = (server) => {
 
     const credential = getCredential(request.headers.authorization)
     const hashedPassword = hashPassword(credential.password)
+
+    const isValidRequest = isValidUser({
+      ...credential,
+      name: request.body && request.body.name,
+    });
+
+    if (!isValidRequest.ok) {
+      return response.code(400)
+        .send({
+          message: isValidRequest.message
+        });
+    }
 
     const user = {
       name: request.body.name,
