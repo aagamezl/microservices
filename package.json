@@ -1,0 +1,32 @@
+{
+  "name": "microservices",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/services/auth/register.js",
+  "dependencies": {
+    "consul": "^0.34.1",
+    "fastify": "^1.13.0",
+    "jquery": "^3.3.1",
+    "jsdom": "^13.0.0",
+    "jsonwebtoken": "^8.4.0",
+    "micro": "^9.3.3",
+    "mongodb": "^3.1.10",
+    "request": "^2.88.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "micro"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aagamezl/microservices.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aagamezl/microservices/issues"
+  },
+  "homepage": "https://github.com/aagamezl/microservices#readme"
+}
