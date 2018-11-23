@@ -29,11 +29,34 @@ const connect = () => {
  * 
  * @param {object} db 
  * @param {string} collectionName 
- * @param {array} data 
+ * @param {object} query 
+ */
+const findDocuments = (db, collectionName, query) => {
+  return new Promise((resolve, reject) => {
+    // Get the documents collection
+    const collection = db.collection(collectionName)
+
+    // Find some documents
+    collection.find(query).toArray((error, docs) => {
+      if (error) {
+        reject(error)
+
+        return
+      }
+
+      resolve(docs)
+    })
+  })
+}
+
+/**
+ *
+ * @param {object} db
+ * @param {string} collectionName
+ * @param {array} data
  */
 const insertDocuments = (db, collectionName, data) => {
   return new Promise((resolve, reject) => {
-
     // Get the documents collection
     const collection = db.collection(collectionName)
 
@@ -50,8 +73,55 @@ const insertDocuments = (db, collectionName, data) => {
   })
 }
 
+/**
+ * 
+ * @param {object} db 
+ * @param {string} collectionName 
+ * @param {object} query 
+ */
+const removeDocument = (db, collectionName, query) => {
+  return new Promise((resolve, reject) => {
+    // Get the documents collection
+    const collection = db.collection(collectionName)
+
+    collection.deleteOne(query, (error, result) => {
+      if (error) {
+        reject(error)
+
+        return
+      }
+
+      resolve(result)
+    })
+  })
+}
+
+/**
+ * 
+ * @param {object} db 
+ * @param {string} collectionName 
+ * @param {object} payload 
+ */
+const updateDocument = (db, collectionName, payload) => {
+  // Get the documents collection
+  const collection = db.collection(collectionName)
+
+  collection.updateOne(payload.query, payload.values, (error, result) => {
+    if (error) {
+      reject(error)
+
+      return
+    }
+
+    resolve(result)
+  })
+}
+
 module.exports = {
   close,
   connect,
+  findDocuments,
   insertDocuments,
+  removeDocument,
+  updateDocument,
 }

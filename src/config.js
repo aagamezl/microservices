@@ -1,6 +1,6 @@
 module.exports = {
   auth: {
-    'secret': 'supersecret'
+    secret: '&@$!changeme!$@&'
   },
   database: {
     url: 'mongodb://localhost:27017', // Connection URL

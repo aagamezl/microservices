@@ -40,9 +40,7 @@ const getInfoByAuthor = (html) => {
 }
 
 const getInfoByTitle = (html) => {
-  // const $ = cheerio.load(html)
   const { window } = new JSDOM(html)
-  // const $ = query(dom.window.document)
   const $ = jQuery(window);
 
   const response = []
@@ -58,7 +56,7 @@ const getInfoByTitle = (html) => {
     }
 
     response.push({
-      author: getList($(`.info .field:eq(${fieldIndex}) a:eq(0)`, element)),
+      author: getList($(`.info .field:eq(${fieldIndex}) a[href*="autart"]`, element)),
       cover: $('a.cover img', element).attr('src'),
       genres: getList($(`.info .field:eq(${fieldIndex + 1}) a`, element)),
       rate: $('.rate i', element).text(),
