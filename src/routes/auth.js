@@ -1,11 +1,11 @@
 const crypto = require('crypto')
-const ObjectId = require('mongodb').ObjectID
 
 const jwt = require('jsonwebtoken')
 
-const { uuid } = require('./../utils')
 const { mongodb } = require('./../database')
 const config = require('./../config')
+
+const { generateError } = require('./../utils')
 
 const hashPassword = (password) => {
   return crypto.createHash('sha256').update(password).digest('hex')
@@ -31,7 +31,7 @@ const getCredential = (data) => {
 
 const setup = (server) => {
   server.post('/login', async (request, response) => {
-    console.log(`executing: /login`)
+    console.log(`executing: POST /login`)
 
     const credential = getCredential(request.headers.authorization)
     const hashedPassword = hashPassword(credential.password)
@@ -49,7 +49,7 @@ const setup = (server) => {
       mongodb.close(client)
   
       if (found.length === 0) {
-        response.code(500).send({
+        response.code(404).send({
           message: `This user don't exists`
         })
   
@@ -67,20 +67,10 @@ const setup = (server) => {
     } catch (error) {
       response.code(500).send(generateError(error))
     }
- 
-
-    // console.log(data)
-
-    // const token = generateToken({ id: 'user._id' }, credential.password)
-
-    // // retrieve issue and expiration times
-    // const { iat, exp } = jwt.decode(token)
-
-    // response.send({ iat, exp, token })
   })
 
   server.post('/register', async (request, response) => {
-    console.log(`executing: /register`)
+    console.log(`executing: POST /register`)
 
     const credential = getCredential(request.headers.authorization)
     const hashedPassword = hashPassword(credential.password)
@@ -126,21 +116,6 @@ const setup = (server) => {
       response.code(500).send(generateError(error))
     }
   })
-}
-
-const generateError = (error) => {
-  // const id = crypto.randomBytes(16).toString('hex')
-  const id = uuid()
-  const message = `An unexpected error has occurred [${error.message}]. Check the serer log for more information.`
-
-  console.log(`Error Log: ID[${id}] - Message[${error.message}]`)
-
-  return {
-    type: 'error',
-    id,
-    name: error.name,
-    message,
-  }
 }
 
 module.exports = {

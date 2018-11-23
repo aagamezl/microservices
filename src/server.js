@@ -4,7 +4,12 @@ const server = fastify({
   logger: false
 })
 
-const { auth, chapter, search } = require('./routes')
+const {
+  auth,
+  bookmarks,
+  chapter,
+  search
+} = require('./routes')
 
 // Declare a route
 server.get('/', (request, reply) => {
@@ -12,6 +17,7 @@ server.get('/', (request, reply) => {
 })
 
 auth.setup(server)
+bookmarks.setup(server)
 chapter.setup(server)
 search.setup(server)
 

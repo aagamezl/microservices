@@ -4,7 +4,6 @@ const jsdom = require('jsdom')
 const { JSDOM } = jsdom
 
 const { getContent, isValid, writeContent } = require('../../cache')
-
 const { getList, makeRequest } = require('./common')
 const url = require('./config')
 

@@ -1,4 +1,4 @@
-const MongoClient = require('mongodb').MongoClient;
+const { MongoClient } = require('mongodb')
 
 const { database } = require('./../config')
 
@@ -30,14 +30,15 @@ const connect = () => {
  * @param {object} db 
  * @param {string} collectionName 
  * @param {object} query 
+ * @param {object} projection 
  */
-const findDocuments = (db, collectionName, query) => {
+const findDocuments = (db, collectionName, query, projection = {}) => {
   return new Promise((resolve, reject) => {
     // Get the documents collection
     const collection = db.collection(collectionName)
 
     // Find some documents
-    collection.find(query).toArray((error, docs) => {
+    collection.find(query, projection).toArray((error, docs) => {
       if (error) {
         reject(error)
 
@@ -84,7 +85,7 @@ const removeDocument = (db, collectionName, query) => {
     // Get the documents collection
     const collection = db.collection(collectionName)
 
-    collection.deleteOne(query, (error, result) => {
+    collection.deleteMany(query, (error, result) => {
       if (error) {
         reject(error)
 
@@ -102,18 +103,20 @@ const removeDocument = (db, collectionName, query) => {
  * @param {string} collectionName 
  * @param {object} payload 
  */
-const updateDocument = (db, collectionName, payload) => {
-  // Get the documents collection
-  const collection = db.collection(collectionName)
+const updateDocument = (db, collectionName, query, values) => {
+  return new Promise((resolve, reject) => {
+    // Get the documents collection
+    const collection = db.collection(collectionName)
 
-  collection.updateOne(payload.query, payload.values, (error, result) => {
-    if (error) {
-      reject(error)
+    collection.updateOne(query, values, (error, result) => {
+      if (error) {
+        reject(error)
 
-      return
-    }
+        return
+      }
 
-    resolve(result)
+      resolve(result)
+    })
   })
 }
 
