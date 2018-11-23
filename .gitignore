@@ -46,7 +46,7 @@ typings/
 .vscode
 
 # cache for the API
-cache
+file-cache
 
 # etcd
 default.etcd
