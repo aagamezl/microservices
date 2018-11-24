@@ -1,6 +1,6 @@
 const crypto = require('crypto')
 
-const { fetchUrl } = require('fetch')
+// const { fetchUrl } = require('fetch')
 const request = require('request')
 const axios = require('axios')
 

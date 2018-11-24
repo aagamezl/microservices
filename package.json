@@ -2,7 +2,7 @@
   "name": "microservices",
   "version": "1.0.0",
   "description": "",
-  "main": "./src/services/auth/register.js",
+  "main": "./src/gateway.js",
   "dependencies": {
     "axios": "^0.18.0",
     "consul": "^0.34.1",
@@ -18,7 +18,8 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "micro"
+    "start": "micro",
+    "consul": "consul agent -dev"
   },
   "repository": {
     "type": "git",
