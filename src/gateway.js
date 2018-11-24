@@ -147,9 +147,15 @@ module.exports = async (request, response) => {
         })
 
         send(response, 200, result.data)
+
+        return
       } catch (error) {
         send(response, 500, error)
+
+        return
       }
     }
   }
+
+  send(response, 404, {message: 'Service not available'})
 }
