@@ -1,12 +1,16 @@
-const { send } = require('micro')
-const url = require('url')
+const { json, send, text } = require('micro')
+const jwt = require('jsonwebtoken')
 
+const { mongodb } = require('./../../database')
+const config = require('./../../config')
 const { uuid } = require('../../utils')
 const { register } = require('./../../helpers')
+const { hashPassword, generateToken, getCredential } = require('./common')
+const { generateError } = require('./../../utils')
 
 const name = 'register'
-const address = 'https://127.0.0.1/register'
 const port = 3002
+const address = `http://127.0.0.1:${port}/register`
 
 const visits = {};
 
@@ -34,13 +38,50 @@ async function init () {
 init()
 
 module.exports = async (request, response) => {
-  const { pathname } = url.parse(request.url)
+  let body
+  try {
+    body = await json(request)
+  } catch (error) {
+    console.log(error)
+  }
+  const hashedPassword = hashPassword(body.password)
 
-  if (visits[pathname]) {
-    visits[pathname] = visits[pathname] + 1
-  } else {
-    visits[pathname] = 1
+  const user = {
+    name: body.name,
+    username: body.username,
+    password: hashedPassword
   }
 
-  send(response, 200, `This page has ${visits[pathname]} visits!`)
+  try {
+    const { db, client } = await mongodb.connect()
+
+    const found = await mongodb.findDocuments(db, 'users', {
+      username: user.username,
+      password: hashedPassword
+    })
+
+    if (found.length > 0) {
+      send(response, 200, {
+        message: 'This user already exists'
+      })
+
+      return
+    }
+
+    // TODO: Check if the user exists
+    const result = await mongodb.insertDocuments(db, 'users', [user])
+
+    mongodb.close(client)
+
+    const token = generateToken({
+      id: result.insertedIds[0].toString()
+    }, config.auth.secret, '1d')
+
+    // retrieve issue and expiration times
+    const { iat, exp } = jwt.decode(token)
+
+    send(response, 200, { iat, exp, token })
+  } catch (error) {
+    send(response, 500, generateError(error))
+  }
 }

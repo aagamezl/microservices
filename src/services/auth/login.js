@@ -11,8 +11,8 @@ const { hashPassword, generateToken, getCredential } = require('./common')
 const { generateError } = require('./../../utils')
 
 const name = 'login'
-const address = 'https://127.0.0.1/login'
 const port = 3001
+const address = `http://127.0.0.1:${port}/login`
 
 async function init () {
   try {
