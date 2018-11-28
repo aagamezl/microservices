@@ -1,0 +1,319 @@
+{
+	"info": {
+		"_postman_id": "b9a60ca2-c9bf-4d7b-99b4-3110f1ddbbe3",
+		"name": "Monolith Manga API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "supersecret",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "john.doe@email.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"John Doe\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "john.doe@email.com",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "supersecret",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search By Title",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViZjVmYWVmOGY5ZTI5MDdmODMwMjU3YyIsImlhdCI6MTU0MjkyNjQxNiwiZXhwIjoxNTQzMDEyODE2fQ.zouT99MRCE-OEgMvqsdyUlvuIyzqvLrPnxRI0BlNnN8",
+						"description": "JWT",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/search/title/fairy tail",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"search",
+						"title",
+						"fairy tail"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search By Author",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViZjVmYWVmOGY5ZTI5MDdmODMwMjU3YyIsImlhdCI6MTU0MjkyNjQxNiwiZXhwIjoxNTQzMDEyODE2fQ.zouT99MRCE-OEgMvqsdyUlvuIyzqvLrPnxRI0BlNnN8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/search/author/Masami Kurumada",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"search",
+						"author",
+						"Masami Kurumada"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Chapters",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViZjVmYWVmOGY5ZTI5MDdmODMwMjU3YyIsImlhdCI6MTU0MjkyNjQxNiwiZXhwIjoxNTQzMDEyODE2fQ.zouT99MRCE-OEgMvqsdyUlvuIyzqvLrPnxRI0BlNnN8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/chapter/fairy-tail",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"chapter",
+						"fairy-tail"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Bookmarks",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViZjVmYWVmOGY5ZTI5MDdmODMwMjU3YyIsImlhdCI6MTU0MjkyNjQxNiwiZXhwIjoxNTQzMDEyODE2fQ.zouT99MRCE-OEgMvqsdyUlvuIyzqvLrPnxRI0BlNnN8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/bookmarks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"bookmarks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Bookmarks",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViZjVmYWVmOGY5ZTI5MDdmODMwMjU3YyIsImlhdCI6MTU0MjkyNjQxNiwiZXhwIjoxNTQzMDEyODE2fQ.zouT99MRCE-OEgMvqsdyUlvuIyzqvLrPnxRI0BlNnN8",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\": \"author\",\n\t\"name\": \"Mashima Hiro\",\n\t\"url\": \"https://mangapark.me/search?autart=mashima+hiro\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/bookmarks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"bookmarks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Bookmarks",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-access-token",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViZjVmYWVmOGY5ZTI5MDdmODMwMjU3YyIsImlhdCI6MTU0MjkyNjQxNiwiZXhwIjoxNTQzMDEyODE2fQ.zouT99MRCE-OEgMvqsdyUlvuIyzqvLrPnxRI0BlNnN8"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"5bf5faef8f9e2907f830257c\",\n\t\"type\": \"author\",\n\t\"name\": \"Mashima Hiro\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/bookmarks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"bookmarks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete All Boomarks",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-access-token",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViZjVmYWVmOGY5ZTI5MDdmODMwMjU3YyIsImlhdCI6MTU0MjkyNjQxNiwiZXhwIjoxNTQzMDEyODE2fQ.zouT99MRCE-OEgMvqsdyUlvuIyzqvLrPnxRI0BlNnN8"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\": \"author\",\n\t\"name\": \"Mashima Hiro\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/bookmarks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"bookmarks"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
